@@ -15,7 +15,6 @@ app.use(express.json());
 //password: 8QDRANpTunyPGHzu
 
 const uri = `mongodb+srv://assignment11:odCfWseqJ17Mh5fw@cluster0.nvnfe.mongodb.net/myFirstDatabase?retryWrites=true&w=majority`;
-console.log(uri);
 const client = new MongoClient(uri, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
@@ -46,9 +45,19 @@ async function run() {
       try {
         const email = req.body.email;
         const password = req.body.password;
-        console.log(email, password);
+        const userEmail = await userCollection.findOne({email: email});
+
+        // authentication
+        if(userEmail.password === password){
+          res.status(201).send({message:"Login success"});
+          console.log('su');
+        }else{
+          res.send({message:"Invalid password"});
+          console.log('pas');
+        }
       } catch {
         res.status(500).send({ message: "login falid" });
+        console.log('em');
       }
     });
   } finally {
