@@ -49,10 +49,10 @@ async function run() {
 
         // authentication
         if(userEmail.password === password){
-          res.status(201).send({message:"Login success"});
+          res.status(200).send({message:"Login success"});
           console.log('su');
         }else{
-          res.send({message:"Invalid password"});
+          res.status(201).send({message:"Invalid password"});
           console.log('pas');
         }
       } catch {
