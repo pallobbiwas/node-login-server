@@ -33,14 +33,24 @@ async function run() {
       const result = await userCollection.find({}).toArray();
       res.send(result);
     });
-    app.post("/user", async (req, res) => {
-        const newUser = req.body;
-        const result = await userCollection.insertOne(newUser);
-        res.send(result);
-      });
-  
 
     //simple post
+    app.post("/user", async (req, res) => {
+      const newUser = req.body;
+      const result = await userCollection.insertOne(newUser);
+      res.send(result);
+    });
+
+    //simple post
+    app.post("/login", async (req, res) => {
+      try {
+        const email = req.body.email;
+        const password = req.body.password;
+        console.log(email, password);
+      } catch {
+        res.status(500).send({ message: "login falid" });
+      }
+    });
   } finally {
     //   await client.close();
   }
